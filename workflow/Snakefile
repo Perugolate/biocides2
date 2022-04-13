@@ -1,0 +1,18 @@
+# thinking rule for each genome
+# read sample prefixes from file in each rule (not everything versus everything)
+# outputs are prokka directories
+# I think this is the best way for concurrency
+# need to test if plasmid and chromosome gbks can somply be catted together
+rule all:
+    input: "results/taxa.RDS"
+
+rule dada2:
+    input:
+        "data/{genome}.gbk",
+        mate1="data/samples/{samprefix}_L001_R1_001.fastq.gz",
+        mate2="data/samples/{samprefix}_L001_R2_001.fastq.gz"
+    output: directory("results/genome_name/samprefix")
+    conda: "envs/snippy.yaml"
+    threads: 10
+    shell: "snippy "
+

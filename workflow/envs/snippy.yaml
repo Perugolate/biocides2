@@ -1,0 +1,6 @@
+name: snippy
+channels:
+  - bioconda
+  - conda-forge
+dependencies:
+  - snippy =4.6.0
