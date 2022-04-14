@@ -2,17 +2,26 @@
 # read sample prefixes from file in each rule (not everything versus everything)
 # outputs are prokka directories
 # I think this is the best way for concurrency
-# need to test if plasmid and chromosome gbks can somply be catted together
+# need to test if plasmid and chromosome gbks can simply be catted together
+# rule all input will need to be replaced with a suitable expand
 rule all:
-    input: "results/taxa.RDS"
+    input: "results/sh1000/4_S6/4_S6.log"
 
-rule dada2:
+rule sh1000_snp:
     input:
-        "data/{genome}.gbk",
-        mate1="data/samples/{samprefix}_L001_R1_001.fastq.gz",
-        mate2="data/samples/{samprefix}_L001_R2_001.fastq.gz"
-    output: directory("results/genome_name/samprefix")
+        ref="data/sh1000_dueppel.gbk",
+        mate1="data/sh1000/{samprefix}_L001_R1_001.fastq.gz",
+        mate2="data/sh1000/{samprefix}_L001_R2_001.fastq.gz"
+    output:
+        outd=directory("results/sh1000/{samprefix}"),
+        rnl="results/sh1000/{samprefix}/{samprefix}.log"
     conda: "envs/snippy.yaml"
     threads: 10
-    shell: "snippy "
+    log: "logs/{samprefix}.txt"
+    shell: "snippy --cpus {threads} \
+		   --outdir {output.outd} \
+		   --ref {input.ref} \
+                   --prefix {wildcards.samprefix} \
+		   --force \
+		   --pe1 {input.mate1} --pe2 {input.mate2} 2> {log}"
 
