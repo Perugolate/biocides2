@@ -1,3 +1,20 @@
+
+SH1000_LIB = ["11_S8",
+              "14_S10",
+              "1_S4",
+              "24_S14",
+              "32_S19",
+              "33_S20",
+              "35_S21",
+              "41_S23",
+              "42_S24",
+              "43_S25",
+              "47_S29",
+              "48_S30",
+              "49_S31",
+              "4_S6",
+              "53_S3",
+              "7_S7"]
 # thinking rule for each genome
 # read sample prefixes from file in each rule (not everything versus everything)
 # outputs are prokka directories
@@ -5,7 +22,9 @@
 # need to test if plasmid and chromosome gbks can simply be catted together
 # rule all input will need to be replaced with a suitable expand
 rule all:
-    input: "results/sh1000/4_S6/4_S6.log"
+    input:
+        expand("results/sh1000/{sh1000_lib}/{sh1000_lib}.log", \
+	        sh1000_lib = SH1000_LIB),
 
 rule sh1000_snp:
     input:
