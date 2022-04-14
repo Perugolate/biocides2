@@ -1,3 +1,20 @@
+ST398_LIB = ["13_S9",
+             "21_S12",
+             "22_S13",
+             "31_S18",
+             "3_S5",
+             "40_S22",
+             "45_S27",
+             "46_S28",
+             "50_S32",
+             "52_S2"]
+
+ATCC6538_LIB = ["17_S11",
+                 "26_S15",
+                 "27_S16",
+                 "28_S17",
+                 "44_S26",
+                 "51_S1"]
 
 SH1000_LIB = ["11_S8",
               "14_S10",
@@ -25,6 +42,46 @@ rule all:
     input:
         expand("results/sh1000/{sh1000_lib}/{sh1000_lib}.log", \
 	        sh1000_lib = SH1000_LIB),
+        expand("results/atcc6538/{atcc6538_lib}/{atcc6538_lib}.log", \
+	        atcc6538_lib = ATCC6538_LIB),
+        expand("results/st398/{st398_lib}/{st398_lib}.log", \
+	        st398_lib = ST398_LIB)
+
+rule st398_snp:
+    input:
+        ref="data/st398.gbk",
+        mate1="data/st398/{samprefix}_L001_R1_001.fastq.gz",
+        mate2="data/st398/{samprefix}_L001_R2_001.fastq.gz"
+    output:
+        outd=directory("results/st398/{samprefix}"),
+        rnl="results/st398/{samprefix}/{samprefix}.log"
+    conda: "envs/snippy.yaml"
+    threads: 10
+    log: "logs/{samprefix}.txt"
+    shell: "snippy --cpus {threads} \
+		   --outdir {output.outd} \
+		   --ref {input.ref} \
+                   --prefix {wildcards.samprefix} \
+		   --force \
+		   --pe1 {input.mate1} --pe2 {input.mate2} 2> {log}"
+
+rule atcc6538_snp:
+    input:
+        ref="data/atcc6538_combined.gbk",
+        mate1="data/atcc6538/{samprefix}_L001_R1_001.fastq.gz",
+        mate2="data/atcc6538/{samprefix}_L001_R2_001.fastq.gz"
+    output:
+        outd=directory("results/atcc6538/{samprefix}"),
+        rnl="results/atcc6538/{samprefix}/{samprefix}.log"
+    conda: "envs/snippy.yaml"
+    threads: 10
+    log: "logs/{samprefix}.txt"
+    shell: "snippy --cpus {threads} \
+		   --outdir {output.outd} \
+		   --ref {input.ref} \
+                   --prefix {wildcards.samprefix} \
+		   --force \
+		   --pe1 {input.mate1} --pe2 {input.mate2} 2> {log}"
 
 rule sh1000_snp:
     input:
