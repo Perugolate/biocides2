@@ -1,0 +1,9 @@
+name: snippy
+channels:
+  - bioconda
+  - conda-forge
+dependencies:
+  - snippy =3.2
+  - openssl=1.0
+  - samtools =1.5
+  - snpeff =4.3
