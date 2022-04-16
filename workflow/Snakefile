@@ -89,11 +89,11 @@ rule map:
     threads: 10
 #    log: "logs/{srr}.txt"
     shell: "snippy --cpus {threads} \
-		   --outdir {output.outd} \
-		   --ref {input.ref} \
+                   --outdir {output.outd} \
+                   --ref {input.ref} \
                    --prefix {wildcards.srr} \
-		   --force \
-		   --pe1 {input.mate1} --pe2 {input.mate2} 2> {log}"
+                   --force \
+                   --pe1 {input.mate1} --pe2 {input.mate2}"
 
 #rule sh1000_snp:
 #    input:
