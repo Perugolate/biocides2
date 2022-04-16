@@ -19,33 +19,30 @@ rule all:
         "results/growth_data/20190906_gp_sh.png",
         "results/growth_data/20190906_gp_sh_custom.png"
 
-# need to rejig this into either 3 sra rules (one per strain)
-# or to correctly place the downloads into 1 of the 3 dirs
-# maybe dictionary in yaml of lib:SRR
-# also sra_accession is different to the lib prefix of the fastq filename
-# so constructing output names is tricky
-# i think the simplest thing to do is to have the pipeline work on SRA
-# accessions rather than the original file names
+rule sra_atcc6538:
+    input: "data/srr_atcc6538.txt"
+    output: expand("data/sra/atcc6538/{srr_atcc6538}/{srr_atcc6538}.sra", \
+                    srr_atcc6538 = config["SRR_ATCC6538"])
+    conda: "envs/sra.yaml"
+    threads: 1
+    shell: "prefetch --output-directory data/sra/atcc6538 --option-file {input}"
 
-# prefetch .sra to data/sra
-# one rule for each genome
-# three accession lists in configfile.yaml
-
-# three accession lists (one per genome)
-# wildcard prefetch over three accession lists into three directories
-# wildcard dump rule 
-
-rule sra:
-    input: "data/srr_{strain}.txt"
+rule sra_sh1000:
+    input: "data/srr_sh1000.txt"
     output: expand("data/sra/sh1000/{srr_sh1000}/{srr_sh1000}.sra", \
-                    srr_sh1000 = config["SRR_SH1000"]),
-            expand("data/sra/atcc6538/{srr_atcc6538}/{srr_atcc6538}.sra", \
-                    srr_atcc6538 = config["SRR_ATCC6538"]),
-            expand("data/sra/st398/{srr_st398}/{srr_st398}.sra", \
+                    srr_sh1000 = config["SRR_SH1000"])
+    conda: "envs/sra.yaml"
+    threads: 1
+    shell: "prefetch --output-directory data/sra/sh1000 --option-file {input}"
+
+rule sra_st398:
+    input: "data/srr_st398.txt"
+    output: expand("data/sra/st398/{srr_st398}/{srr_st398}.sra", \
                     srr_st398 = config["SRR_ST398"])
     conda: "envs/sra.yaml"
-    threads: 6
-    shell: "prefetch --output-directory data/sra/{wildcards.strain} --option-file {input}"
+    threads: 1
+    shell: "prefetch --output-directory data/sra/st398 --option-file {input}"
+
 
 #rule dump_sh1000:
 #    input: "data/srr_sh1000.txt"
