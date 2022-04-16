@@ -23,13 +23,34 @@ rule all:
 # i think the simplest thing to do is to have the pipeline work on SRA
 # accessions rather than the original file names
 
+# prefetch .sra to data/sra
+# one rule for each genome
+# three accession lists in configfile.yaml
+
+# three accession lists (one per genome)
+# wildcard prefetch over three accession lists into three directories
+# wildcard dump rule 
+
 rule sra:
-    input: "data/SraAccList.txt"
-    output: expand("data/sra/{sra_accession}/{sra_accession}.sra", \
-                    sra_accession = config["SRR"])
+    input: "data/srr_{strain}.txt"
+    output: expand("data/sra/sh1000/{srr_sh1000}/{srr_sh1000}.sra", \
+                    srr_sh1000 = config["SRR_SH1000"]),
+            expand("data/sra/atcc6538/{srr_atcc6538}/{srr_atcc6538}.sra", \
+                    srr_atcc6538 = config["SRR_ATCC6538"]),
+            expand("data/sra/st398/{srr_st398}/{srr_st398}.sra", \
+                    srr_st398 = config["SRR_ST398"])
     conda: "envs/sra.yaml"
     threads: 6
-    shell: "prefetch --output-directory data/sra/ --option-file {input}"
+    shell: "prefetch --output-directory data/sra/{wildcards.strain} --option-file {input}"
+
+#rule dump_sh1000:
+#    input: "data/srr_sh1000.txt"
+#    output: expand("data/sra/sh1000/{sra_accession}_{mate}.fastq.gz", \
+#                    sra_accession = config["SRR"], mate = ["1", "2"])
+#    conda: "envs/sra.yaml"
+#    threads: 6
+#    shell: "prefetch --output-directory data/sra/ --option-file {input}"
+#
 
 rule st398_snp:
     input:
