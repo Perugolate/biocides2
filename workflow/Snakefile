@@ -83,8 +83,7 @@ rule trim:
 	       --thread {threads} \
 	       --length_required 50 \
 	       --cut_tail \
-	       --cut_tail_window_size 1 \
-	       --cut_tail_mean_quality X 2> {log}"
+	       --cut_tail_window_size 1 2> {log}"
 
 #rule map:
 #    input:
