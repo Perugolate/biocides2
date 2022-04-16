@@ -25,7 +25,7 @@ rule all:
 
 rule sra:
     input: "data/SraAccList.txt"
-    output: expand("data/sra/{sra_accession}.sra", \
+    output: expand("data/sra/{sra_accession}/{sra_accession}.sra", \
                     sra_accession = config["SRR"])
     conda: "envs/sra.yaml"
     threads: 6
