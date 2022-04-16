@@ -2,8 +2,12 @@ configfile: "config.yaml"
 
 rule all:
     input:
-        expand("data/sra/{sra_accession}/{sra_accession}.sra/", \
-                sra_accession = config["SRR"]),
+        expand("data/sra/sh1000/{srr_sh1000}/{srr_sh1000}.sra", \
+                    srr_sh1000 = config["SRR_SH1000"]),
+        expand("data/sra/atcc6538/{srr_atcc6538}/{srr_atcc6538}.sra", \
+                    srr_atcc6538 = config["SRR_ATCC6538"]),
+        expand("data/sra/st398/{srr_st398}/{srr_st398}.sra", \
+                    srr_st398 = config["SRR_ST398"]),
         expand("results/atcc6538/{atcc6538_lib}/{atcc6538_lib}.log", \
 	        atcc6538_lib = config["ATCC6538_LIB"]),
         expand("results/st398/{st398_lib}/{st398_lib}.log", \
