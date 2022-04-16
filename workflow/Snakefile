@@ -18,7 +18,7 @@ rule all:
 	        srr_atcc6538 = config["SRR_ATCC6538"]),
         expand("results/sh1000/{srr_sh1000}/{srr_sh1000}.log", \
 	        srr_sh1000 = config["SRR_SH1000"]),
-        expand("results/st398/{srr_st398}/{st398}.log", \
+        expand("results/st398/{srr_st398}/{srr_st398}.log", \
 	        srr_st398 = config["SRR_ST398"]),
         "results/growth_data/20190906_gp_all.png",
         "results/growth_data/20190906_gp_no_sh.png",
