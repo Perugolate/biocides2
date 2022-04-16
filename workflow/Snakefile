@@ -8,6 +8,8 @@ rule all:
                     srr_atcc6538 = config["SRR_ATCC6538"]),
         expand("data/sra/st398/{srr_st398}/{srr_st398}.sra", \
                     srr_st398 = config["SRR_ST398"]),
+        expand("data/sra/atcc6538/{srr_atcc6538}_{mate}.fastq.gz", \
+                srr_atcc6538 = config["SRR_ATCC6538"], mate = ["1", "2"]),
         expand("data/sra/sh1000/{srr_sh1000}_{mate}.fastq.gz", \
                 srr_sh1000 = config["SRR_SH1000"], mate = ["1", "2"]),
         expand("results/atcc6538/{atcc6538_lib}/{atcc6538_lib}.log", \
@@ -46,14 +48,14 @@ rule sra_st398:
     shell: "prefetch --output-directory data/sra/st398 --option-file {input}"
 
 rule dump_sh1000:
-    input: "data/sra/sh1000/{sample}"
+    input: "data/sra/{genome}/{sample}"
     output:
-        "data/sra/sh1000/{sample}_1.fastq.gz",
-        "data/sra/sh1000/{sample}_2.fastq.gz"
+        "data/sra/{genome}/{sample}_1.fastq.gz",
+        "data/sra/{genome}/{sample}_2.fastq.gz"
     conda: "envs/dump.yaml"
     threads: 8
     shell: "parallel-fastq-dump --sra-id {input} --threads {threads} \
-               --outdir data/sra/sh1000/ --split-files --gzip"
+               --outdir data/sra/{wildcards.genome}/ --split-files --gzip"
 
 rule st398_snp:
     input:
