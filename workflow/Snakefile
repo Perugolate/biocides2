@@ -68,7 +68,7 @@ rule dump:
 rule trim:
     input:
         mate1="data/sra/{genome}/{sample}_1.fastq.gz",
-        mate1="data/sra/{genome}/{sample}_2.fastq.gz"
+        mate2="data/sra/{genome}/{sample}_2.fastq.gz"
     output:
         out1="data/sra/{genome}/{sample}_1.tr.fastq.gz",
         out2="data/sra/{genome}/{sample}_2.tr.fastq.gz"
