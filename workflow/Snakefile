@@ -53,7 +53,7 @@ rule dump_sh1000:
     conda: "envs/dump.yaml"
     threads: 8
     shell: "parallel-fastq-dump --sra-id {input} --threads {threads} \
-               --outdir data/sh1000 --split-files --gzip"
+               --outdir data/sra/sh1000/ --split-files --gzip"
 
 rule st398_snp:
     input:
