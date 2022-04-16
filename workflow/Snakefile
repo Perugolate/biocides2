@@ -3,7 +3,7 @@ configfile: "config.yaml"
 rule all:
     input:
         expand("data/sra/{sra_accession}.sra/", \
-                sra_accession = config["SRR"])
+                sra_accession = config["SRR"]),
         expand("results/atcc6538/{atcc6538_lib}/{atcc6538_lib}.log", \
 	        atcc6538_lib = config["ATCC6538_LIB"]),
         expand("results/st398/{st398_lib}/{st398_lib}.log", \
