@@ -79,7 +79,7 @@ rule st398_snp:
 
 rule atcc6538_snp:
     input:
-        ref="data/atcc6538_combined.gbk",
+        ref="data/atcc6538.gbk",
         mate1="data/atcc6538/{samprefix}_L001_R1_001.fastq.gz",
         mate2="data/atcc6538/{samprefix}_L001_R2_001.fastq.gz"
     output:
