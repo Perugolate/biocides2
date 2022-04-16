@@ -1,0 +1,6 @@
+name: trim
+channels:
+  - bioconda
+  - conda-forge
+dependencies:
+  - fastp 

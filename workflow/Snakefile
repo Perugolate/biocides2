@@ -14,6 +14,12 @@ rule all:
                 srr_sh1000 = config["SRR_SH1000"], mate = ["1", "2"]),
         expand("data/sra/st398/{srr_st398}_{mate}.fastq.gz", \
                 srr_st398 = config["SRR_ST398"], mate = ["1", "2"]),
+        expand("data/sra/atcc6538/{srr_atcc6538}_{mate}.tr.fastq.gz", \
+                srr_atcc6538 = config["SRR_ATCC6538"], mate = ["1", "2"]),
+        expand("data/sra/sh1000/{srr_sh1000}_{mate}.tr.fastq.gz", \
+                srr_sh1000 = config["SRR_SH1000"], mate = ["1", "2"]),
+        expand("data/sra/st398/{srr_st398}_{mate}.tr.fastq.gz", \
+                srr_st398 = config["SRR_ST398"], mate = ["1", "2"]),
         expand("results/atcc6538/{srr_atcc6538}/{srr_atcc6538}.log", \
 	        srr_atcc6538 = config["SRR_ATCC6538"]),
         expand("results/sh1000/{srr_sh1000}/{srr_sh1000}.log", \
@@ -59,11 +65,50 @@ rule dump:
     shell: "parallel-fastq-dump --sra-id {input} --threads {threads} \
                --outdir data/sra/{wildcards.genome}/ --split-files --gzip"
 
-rule map:
+rule trim:
+    input:
+        mate1="data/sra/{genome}/{sample}_1.fastq.gz",
+        mate1="data/sra/{genome}/{sample}_2.fastq.gz"
+    output:
+        out1="data/sra/{genome}/{sample}_1.tr.fastq.gz",
+        out2="data/sra/{genome}/{sample}_2.tr.fastq.gz"
+    log: "logs/{genome}_{sample}.log"
+    conda: "envs/trim.yaml"
+    threads: 3
+    shell:
+        "fastp --in1 {input.mate1} \
+               --in2 {input.mate2} \
+	       --out1 {output.out1} \
+	       --out2 {output.out2} \
+	       --thread {threads} \
+	       --length_required 50 \
+	       --cut_tail \
+	       --cut_tail_window_size 1 \
+	       --cut_tail_mean_quality X 2> {log}"
+
+#rule map:
+#    input:
+#        ref="data/{genome}.gbk",
+#        mate1="data/sra/{genome}/{srr}_1.fastq.gz",
+#        mate2="data/sra/{genome}/{srr}_2.fastq.gz"
+#    output:
+#        outd=directory("results/{genome}/{srr}"),
+#        rnl="results/{genome}/{srr}/{srr}.log"
+#    conda: "envs/snippy3.2.yaml"
+#    threads: 10
+##    log: "logs/{srr}.txt"
+#    shell: "snippy --cpus {threads} \
+#                   --outdir {output.outd} \
+#                   --ref {input.ref} \
+#                   --prefix {wildcards.srr} \
+#                   --force \
+#                   --pe1 {input.mate1} --pe2 {input.mate2}"
+
+rule map_trim:
     input:
         ref="data/{genome}.gbk",
-        mate1="data/sra/{genome}/{srr}_1.fastq.gz",
-        mate2="data/sra/{genome}/{srr}_2.fastq.gz"
+        mate1="data/sra/{genome}/{srr}_1.tr.fastq.gz",
+        mate2="data/sra/{genome}/{srr}_2.tr.fastq.gz"
     output:
         outd=directory("results/{genome}/{srr}"),
         rnl="results/{genome}/{srr}/{srr}.log"
@@ -76,6 +121,7 @@ rule map:
                    --prefix {wildcards.srr} \
                    --force \
                    --pe1 {input.mate1} --pe2 {input.mate2}"
+
 
 rule growth_data:
     input: csv="data/20190906_growth_data.csv"
