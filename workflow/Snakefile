@@ -85,7 +85,7 @@ rule map:
     output:
         outd=directory("results/{genome}/{srr}"),
         rnl="results/{genome}/{srr}/{srr}.log"
-    conda: "envs/snippy.yaml"
+    conda: "envs/snippy3.2.yaml"
     threads: 10
 #    log: "logs/{srr}.txt"
     shell: "snippy --cpus {threads} \
