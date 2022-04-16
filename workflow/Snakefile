@@ -1,51 +1,13 @@
-ST398_LIB = ["13_S9",
-             "21_S12",
-             "22_S13",
-             "31_S18",
-             "3_S5",
-             "40_S22",
-             "45_S27",
-             "46_S28",
-             "50_S32",
-             "52_S2"]
+configfile: "config.yaml"
 
-ATCC6538_LIB = ["17_S11",
-                 "26_S15",
-                 "27_S16",
-                 "28_S17",
-                 "44_S26",
-                 "51_S1"]
-
-SH1000_LIB = ["11_S8",
-              "14_S10",
-              "1_S4",
-              "24_S14",
-              "32_S19",
-              "33_S20",
-              "35_S21",
-              "41_S23",
-              "42_S24",
-              "43_S25",
-              "47_S29",
-              "48_S30",
-              "49_S31",
-              "4_S6",
-              "53_S3",
-              "7_S7"]
-# thinking rule for each genome
-# read sample prefixes from file in each rule (not everything versus everything)
-# outputs are prokka directories
-# I think this is the best way for concurrency
-# need to test if plasmid and chromosome gbks can simply be catted together
-# rule all input will need to be replaced with a suitable expand
 rule all:
     input:
-        expand("results/sh1000/{sh1000_lib}/{sh1000_lib}.log", \
-	        sh1000_lib = SH1000_LIB),
         expand("results/atcc6538/{atcc6538_lib}/{atcc6538_lib}.log", \
-	        atcc6538_lib = ATCC6538_LIB),
+	        atcc6538_lib = config["ATCC6538_LIB"]),
         expand("results/st398/{st398_lib}/{st398_lib}.log", \
-	        st398_lib = ST398_LIB),
+	        st398_lib = config["ST398_LIB"]),
+        expand("results/sh1000/{sh1000_lib}/{sh1000_lib}.log", \
+	        sh1000_lib = config["SH1000_LIB"]),
         "results/growth_data/20190906_gp_all.png",
         "results/growth_data/20190906_gp_no_sh.png",
         "results/growth_data/20190906_gp_sh.png",
