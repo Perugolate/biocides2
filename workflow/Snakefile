@@ -28,7 +28,7 @@ rule all:
 rule sra_atcc6538:
     input: "data/srr_atcc6538.txt"
     output: expand("data/sra/atcc6538/{srr_atcc6538}/{srr_atcc6538}.sra", \
-                    srr_atcc6538 = config["SRR_ATCC6538"])
+                    srr_atcc6538 = config["SRR_ATCC6538"]),
     conda: "envs/sra.yaml"
     threads: 1
     shell: "prefetch --output-directory data/sra/atcc6538 --option-file {input}"
@@ -50,7 +50,7 @@ rule sra_st398:
     shell: "prefetch --output-directory data/sra/st398 --option-file {input}"
 
 rule dump:
-    input: "data/sra/{genome}/{sample}"
+    input: "data/sra/{genome}/{sample}/{sample}.sra"
     output:
         "data/sra/{genome}/{sample}_1.fastq.gz",
         "data/sra/{genome}/{sample}_2.fastq.gz"
