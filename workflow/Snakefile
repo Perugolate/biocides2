@@ -47,8 +47,9 @@ rule sra_st398:
 
 rule dump_sh1000:
     input: "data/sra/sh1000/{sample}"
-    output: expand("data/sra/sh1000/{srr_sh1000}_{mate}.fastq.gz", \
-                    srr_sh1000 = config["SRR_SH1000"], mate = ["1", "2"])
+    output:
+        "data/sra/sh1000/{sample}_1.fastq.gz",
+        "data/sra/sh1000/{sample}_2.fastq.gz"
     conda: "envs/dump.yaml"
     threads: 8
     shell: "parallel-fastq-dump --sra-id {input} --threads {threads} \
