@@ -49,7 +49,7 @@ rule sra_st398:
     threads: 1
     shell: "prefetch --output-directory data/sra/st398 --option-file {input}"
 
-rule dump_sh1000:
+rule dump:
     input: "data/sra/{genome}/{sample}"
     output:
         "data/sra/{genome}/{sample}_1.fastq.gz",
