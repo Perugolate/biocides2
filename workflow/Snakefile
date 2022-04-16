@@ -2,6 +2,8 @@ configfile: "config.yaml"
 
 rule all:
     input:
+        expand("data/sra/{sra_accession}.sra/", \
+                sra_accession = config["SRR"])
         expand("results/atcc6538/{atcc6538_lib}/{atcc6538_lib}.log", \
 	        atcc6538_lib = config["ATCC6538_LIB"]),
         expand("results/st398/{st398_lib}/{st398_lib}.log", \
@@ -12,6 +14,22 @@ rule all:
         "results/growth_data/20190906_gp_no_sh.png",
         "results/growth_data/20190906_gp_sh.png",
         "results/growth_data/20190906_gp_sh_custom.png"
+
+# need to rejig this into either 3 sra rules (one per strain)
+# or to correctly place the downloads into 1 of the 3 dirs
+# maybe dictionary in yaml of lib:SRR
+# also sra_accession is different to the lib prefix of the fastq filename
+# so constructing output names is tricky
+# i think the simplest thing to do is to have the pipeline work on SRA
+# accessions rather than the original file names
+
+rule sra:
+    input: "data/SraAccList.txt"
+    output: expand("data/sra/{sra_accession}.sra", \
+                    sra_accession = config["SRR"])
+    conda: "envs/sra.yaml"
+    threads: 6
+    shell: "prefetch --output-directory data/sra/ --option-file {input}"
 
 rule st398_snp:
     input:
