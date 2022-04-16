@@ -1,0 +1,6 @@
+name: dump
+channels:
+  - bioconda
+  - conda-forge
+dependencies:
+  - parallel-fastq-dump
