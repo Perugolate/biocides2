@@ -59,59 +59,59 @@ rule dump:
     shell: "parallel-fastq-dump --sra-id {input} --threads {threads} \
                --outdir data/sra/{wildcards.genome}/ --split-files --gzip"
 
-rule st398_snp:
+#rule st398_snp:
+#    input:
+#        ref="data/st398.gbk",
+#        mate1="data/st398/{samprefix}_L001_R1_001.fastq.gz",
+#        mate2="data/st398/{samprefix}_L001_R2_001.fastq.gz"
+#    output:
+#        outd=directory("results/st398/{samprefix}"),
+#        rnl="results/st398/{samprefix}/{samprefix}.log"
+#    conda: "envs/snippy.yaml"
+#    threads: 10
+#    log: "logs/{samprefix}.txt"
+#    shell: "snippy --cpus {threads} \
+#		   --outdir {output.outd} \
+#		   --ref {input.ref} \
+#                   --prefix {wildcards.samprefix} \
+#		   --force \
+#		   --pe1 {input.mate1} --pe2 {input.mate2} 2> {log}"
+
+rule map:
     input:
-        ref="data/st398.gbk",
-        mate1="data/st398/{samprefix}_L001_R1_001.fastq.gz",
-        mate2="data/st398/{samprefix}_L001_R2_001.fastq.gz"
+        ref="data/{genome}.gbk",
+        mate1="data/sra/{genome}/{srr}_1.fastq.gz",
+        mate2="data/sra/{genome}/{srr}_2.fastq.gz"
     output:
-        outd=directory("results/st398/{samprefix}"),
-        rnl="results/st398/{samprefix}/{samprefix}.log"
+        outd=directory("results/{genome}/{srr}"),
+        rnl="results/{genome}/{srr}/{srr}.log"
     conda: "envs/snippy.yaml"
     threads: 10
-    log: "logs/{samprefix}.txt"
+    log: "logs/{srr}.txt"
     shell: "snippy --cpus {threads} \
 		   --outdir {output.outd} \
 		   --ref {input.ref} \
-                   --prefix {wildcards.samprefix} \
+                   --prefix {wildcards.srr} \
 		   --force \
 		   --pe1 {input.mate1} --pe2 {input.mate2} 2> {log}"
 
-rule atcc6538_snp:
-    input:
-        ref="data/atcc6538.gbk",
-        mate1="data/atcc6538/{samprefix}_L001_R1_001.fastq.gz",
-        mate2="data/atcc6538/{samprefix}_L001_R2_001.fastq.gz"
-    output:
-        outd=directory("results/atcc6538/{samprefix}"),
-        rnl="results/atcc6538/{samprefix}/{samprefix}.log"
-    conda: "envs/snippy.yaml"
-    threads: 10
-    log: "logs/{samprefix}.txt"
-    shell: "snippy --cpus {threads} \
-		   --outdir {output.outd} \
-		   --ref {input.ref} \
-                   --prefix {wildcards.samprefix} \
-		   --force \
-		   --pe1 {input.mate1} --pe2 {input.mate2} 2> {log}"
-
-rule sh1000_snp:
-    input:
-        ref="data/sh1000_dueppel.gbk",
-        mate1="data/sh1000/{samprefix}_L001_R1_001.fastq.gz",
-        mate2="data/sh1000/{samprefix}_L001_R2_001.fastq.gz"
-    output:
-        outd=directory("results/sh1000/{samprefix}"),
-        rnl="results/sh1000/{samprefix}/{samprefix}.log"
-    conda: "envs/snippy.yaml"
-    threads: 10
-    log: "logs/{samprefix}.txt"
-    shell: "snippy --cpus {threads} \
-		   --outdir {output.outd} \
-		   --ref {input.ref} \
-                   --prefix {wildcards.samprefix} \
-		   --force \
-		   --pe1 {input.mate1} --pe2 {input.mate2} 2> {log}"
+#rule sh1000_snp:
+#    input:
+#        ref="data/sh1000_dueppel.gbk",
+#        mate1="data/sh1000/{samprefix}_L001_R1_001.fastq.gz",
+#        mate2="data/sh1000/{samprefix}_L001_R2_001.fastq.gz"
+#    output:
+#        outd=directory("results/sh1000/{samprefix}"),
+#        rnl="results/sh1000/{samprefix}/{samprefix}.log"
+#    conda: "envs/snippy.yaml"
+#    threads: 10
+#    log: "logs/{samprefix}.txt"
+#    shell: "snippy --cpus {threads} \
+#		   --outdir {output.outd} \
+#		   --ref {input.ref} \
+#                   --prefix {wildcards.samprefix} \
+#		   --force \
+#		   --pe1 {input.mate1} --pe2 {input.mate2} 2> {log}"
 
 rule growth_data:
     input: csv="data/20190906_growth_data.csv"
