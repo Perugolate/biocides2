@@ -45,7 +45,11 @@ rule all:
         expand("results/atcc6538/{atcc6538_lib}/{atcc6538_lib}.log", \
 	        atcc6538_lib = ATCC6538_LIB),
         expand("results/st398/{st398_lib}/{st398_lib}.log", \
-	        st398_lib = ST398_LIB)
+	        st398_lib = ST398_LIB),
+        "results/growth_data/20190906_gp_all.png",
+        "results/growth_data/20190906_gp_no_sh.png",
+        "results/growth_data/20190906_gp_sh.png",
+        "results/growth_data/20190906_gp_sh_custom.png"
 
 rule st398_snp:
     input:
@@ -100,4 +104,15 @@ rule sh1000_snp:
                    --prefix {wildcards.samprefix} \
 		   --force \
 		   --pe1 {input.mate1} --pe2 {input.mate2} 2> {log}"
+
+rule growth_data:
+    input: csv="data/20190906_growth_data.csv"
+    output:
+        "results/growth_data/20190906_gp_all.png",
+        "results/growth_data/20190906_gp_no_sh.png",
+	"results/growth_data/20190906_gp_sh.png",
+	"results/growth_data/20190906_gp_sh_custom.png"
+    conda: "envs/growth_data.yaml"
+    threads: 1
+    script: "scripts/growth_data.R"
 

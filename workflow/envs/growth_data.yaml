@@ -1,0 +1,14 @@
+channels:
+  - bioconda
+  - conda-forge
+dependencies:
+  - r-base =4.1.3
+  - r-readr
+  - r-magrittr
+  - r-tidyr
+  - r-ggplot2
+  - r-cowplot
+  - r-lubridate
+  - r-purrr
+  - r-ggsignif
+  - r-contrast
