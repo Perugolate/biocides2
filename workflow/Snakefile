@@ -85,24 +85,6 @@ rule trim:
 	       --cut_tail \
 	       --cut_tail_window_size 1 2> {log}"
 
-#rule map:
-#    input:
-#        ref="data/{genome}.gbk",
-#        mate1="data/sra/{genome}/{srr}_1.fastq.gz",
-#        mate2="data/sra/{genome}/{srr}_2.fastq.gz"
-#    output:
-#        outd=directory("results/{genome}/{srr}"),
-#        rnl="results/{genome}/{srr}/{srr}.log"
-#    conda: "envs/snippy3.2.yaml"
-#    threads: 10
-##    log: "logs/{srr}.txt"
-#    shell: "snippy --cpus {threads} \
-#                   --outdir {output.outd} \
-#                   --ref {input.ref} \
-#                   --prefix {wildcards.srr} \
-#                   --force \
-#                   --pe1 {input.mate1} --pe2 {input.mate2}"
-
 rule map_trim:
     input:
         ref="data/{genome}.gbk",
