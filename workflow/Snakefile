@@ -2,30 +2,30 @@ configfile: "config.yaml"
 
 rule all:
     input:
-        expand("data/sra/sh1000/{srr_sh1000}/{srr_sh1000}.sra", \
-                    srr_sh1000 = config["SRR_SH1000"]),
-        expand("data/sra/atcc6538/{srr_atcc6538}/{srr_atcc6538}.sra", \
-                    srr_atcc6538 = config["SRR_ATCC6538"]),
-        expand("data/sra/st398/{srr_st398}/{srr_st398}.sra", \
-                    srr_st398 = config["SRR_ST398"]),
-        expand("data/sra/atcc6538/{srr_atcc6538}_{mate}.fastq.gz", \
-                srr_atcc6538 = config["SRR_ATCC6538"], mate = ["1", "2"]),
-        expand("data/sra/sh1000/{srr_sh1000}_{mate}.fastq.gz", \
-                srr_sh1000 = config["SRR_SH1000"], mate = ["1", "2"]),
-        expand("data/sra/st398/{srr_st398}_{mate}.fastq.gz", \
-                srr_st398 = config["SRR_ST398"], mate = ["1", "2"]),
-        expand("data/sra/atcc6538/{srr_atcc6538}_{mate}.tr.fastq.gz", \
-                srr_atcc6538 = config["SRR_ATCC6538"], mate = ["1", "2"]),
-        expand("data/sra/sh1000/{srr_sh1000}_{mate}.tr.fastq.gz", \
-                srr_sh1000 = config["SRR_SH1000"], mate = ["1", "2"]),
-        expand("data/sra/st398/{srr_st398}_{mate}.tr.fastq.gz", \
-                srr_st398 = config["SRR_ST398"], mate = ["1", "2"]),
-        expand("results/atcc6538/{srr_atcc6538}/{srr_atcc6538}.log", \
-	        srr_atcc6538 = config["SRR_ATCC6538"]),
-        expand("results/sh1000/{srr_sh1000}/{srr_sh1000}.log", \
-	        srr_sh1000 = config["SRR_SH1000"]),
-        expand("results/st398/{srr_st398}/{srr_st398}.log", \
-	        srr_st398 = config["SRR_ST398"]),
+	expand("data/sra/sh1000/{srr_sh1000}/{srr_sh1000}.sra", \
+	            srr_sh1000 = config["SRR_SH1000"]),
+	expand("data/sra/atcc6538/{srr_atcc6538}/{srr_atcc6538}.sra", \
+	            srr_atcc6538 = config["SRR_ATCC6538"]),
+	expand("data/sra/st398/{srr_st398}/{srr_st398}.sra", \
+	            srr_st398 = config["SRR_ST398"]),
+	expand("data/sra/atcc6538/{srr_atcc6538}_{mate}.fastq.gz", \
+	        srr_atcc6538 = config["SRR_ATCC6538"], mate = ["1", "2"]),
+	expand("data/sra/sh1000/{srr_sh1000}_{mate}.fastq.gz", \
+	        srr_sh1000 = config["SRR_SH1000"], mate = ["1", "2"]),
+	expand("data/sra/st398/{srr_st398}_{mate}.fastq.gz", \
+	        srr_st398 = config["SRR_ST398"], mate = ["1", "2"]),
+	expand("data/sra/atcc6538/{srr_atcc6538}_{mate}.tr.fastq.gz", \
+	        srr_atcc6538 = config["SRR_ATCC6538"], mate = ["1", "2"]),
+	expand("data/sra/sh1000/{srr_sh1000}_{mate}.tr.fastq.gz", \
+	        srr_sh1000 = config["SRR_SH1000"], mate = ["1", "2"]),
+	expand("data/sra/st398/{srr_st398}_{mate}.tr.fastq.gz", \
+	        srr_st398 = config["SRR_ST398"], mate = ["1", "2"]),
+	expand("results/atcc6538/{srr_atcc6538}/{srr_atcc6538}.log", \
+	    srr_atcc6538 = config["SRR_ATCC6538"]),
+	expand("results/sh1000/{srr_sh1000}/{srr_sh1000}.log", \
+	    srr_sh1000 = config["SRR_SH1000"]),
+	expand("results/st398/{srr_st398}/{srr_st398}.log", \
+	    srr_st398 = config["SRR_ST398"]),
         "results/growth_data/20190906_gp_all.png",
         "results/growth_data/20190906_gp_no_sh.png",
         "results/growth_data/20190906_gp_sh.png",
@@ -105,12 +105,13 @@ rule map_trim:
 
 
 rule growth_data:
-    input: csv="data/20190906_growth_data.csv"
+    input: csv="data/20190906_growth_data.csv",
     output:
         "results/growth_data/20190906_gp_all.png",
         "results/growth_data/20190906_gp_no_sh.png",
 	"results/growth_data/20190906_gp_sh.png",
-	"results/growth_data/20190906_gp_sh_custom.png"
+	"results/growth_data/20190906_gp_sh_custom.png",
+        "results/growth_data/stats.txt"
     conda: "envs/growth_data.yaml"
     threads: 1
     script: "scripts/growth_data.R"

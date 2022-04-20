@@ -163,3 +163,32 @@ fod_row <- plot_grid(bacfod, pexfod)
 png("results/growth_data/20190906_gp_sh_custom.png", width = 2 * 480, height = 2.5 * 480)
 plot_grid(lag_row, max_row, fod_row, nrow = 3)
 dev.off()
+
+
+mod_con <- function(inDf, intStrain, intFormula, intLevel1, intLevel2) {
+  df2 <- subset(inDf, strain == intStrain)
+  mod <- lm(formula = intFormula, data = df2)
+  con <- contrast(mod, list(type = intLevel1), list(type = intLevel2))
+  return(con)
+}
+
+mod_con(df2, "ATCC6538", vmax~type, "Ancestor", "BAC_17")
+
+sink("results/growth_data/stats.txt")
+df2 %>%
+  split(.$strain) %>%
+  map(~ lm(lag ~ type, data = .)) %>%
+  map(summary)
+
+df2 %>%
+  split(.$strain) %>%
+  map(~ lm(vmax ~ type, data = .)) %>%
+  map(summary)
+
+df2 %>%
+  split(.$strain) %>%
+  map(~ lm(finalOD ~ type, data = .)) %>%
+  map(summary)
+sink()
+
+
