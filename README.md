@@ -47,3 +47,15 @@ You can download this as a tsv [here](https://github.com/Perugolate/biocides2/bl
 |BAC       |population |35      |stop gained c.2035C>T p.Gln679*                                                               |PROKKA_01463 |relA       |GTP pyrophosphokinase                           |SRR18771794 |
 |BAC       |colony     |35-s-c2 |stop gained c.2035C>T p.Gln679*                                                               |PROKKA_01463 |relA       |GTP pyrophosphokinase                           |SRR18771783 |
 |CON       |population |11      |g.1960175G>A                                                                                  |intergenic   |-          |-                                               |SRR18771778 |
+
+### ATCC6538
+
+|Treatment |Type       |Label   |Mutation    |Locus tag  |Annotation |Function |Run         |
+|:---------|:----------|:-------|:-----------|:----------|:----------|:--------|:-----------|
+|BAC       |population |17      |g.714937C>G |Intergenic |-          |-        |SRR18771805 |
+|BAC       |colony     |17-s-c1 |g.714937C>G |Intergenic |-          |-        |SRR18771789 |
+
+### ST398
+
+
+
