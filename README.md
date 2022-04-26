@@ -50,6 +50,8 @@ You can download this as a tsv [here](https://github.com/Perugolate/biocides2/bl
 
 ### ATCC6538
 
+You can download this as a tsv [here](https://github.com/Perugolate/biocides2/blob/main/atcc6538.tsv).
+
 |Treatment |Type       |Label   |Mutation    |Locus tag  |Annotation |Function |Run         |
 |:---------|:----------|:-------|:-----------|:----------|:----------|:--------|:-----------|
 |BAC       |population |17      |g.714937C>G |Intergenic |-          |-        |SRR18771805 |
@@ -57,5 +59,15 @@ You can download this as a tsv [here](https://github.com/Perugolate/biocides2/bl
 
 ### ST398
 
+You can download this as a tsv [here](https://github.com/Perugolate/biocides2/blob/main/st398.tsv).
 
+|Treatment |Type       |Label   |Mutation                              |Locus tag    |Annotation |Function                                 |Run         |
+|:---------|:----------|:-------|:-------------------------------------|:------------|:----------|:----------------------------------------|:-----------|
+|BAC       |population |21      |g.1051564.C>T                         |Intergenic   |-          |-                                        |SRR18771804 |
+|BAC       |colony     |21-s-c1 |g.1051564.C>T                         |Intergenic   |-          |-                                        |SRR18771788 |
+|BAC       |population |22      |g.1051564.C>T                         |Intergenic   |-          |-                                        |SRR18771803 |
+|BAC       |colony     |22-s-c1 |g.1051564.C>T                         |Intergenic   |-          |-                                        |SRR18771787 |
+|BAC       |colony     |21-s-c1 |frameshift variant c.88delC p.Gln30fs |PROKKA_01239 |pbpX       |Putative penicillin-binding protein PbpX |SRR18771788 |
+|BAC       |colony     |22-s-c1 |missense variant c.841C>A p.Gln281Lys |PROKKA_01239 |pbpX       |Putative penicillin-binding protein PbpX |SRR18771787 |
+|BAC       |colony     |40-s-c2 |missense variant c.808G>A p.Glu270Lys |PROKKA_01802 |sigA       |RNA polymerase sigma factor SigA         |SRR18771782 |
 
