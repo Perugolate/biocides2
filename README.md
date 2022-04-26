@@ -6,6 +6,8 @@ This repository contains the code and data required to download raw sequencing r
 
 ### SH1000
 
+You can download this as a tsv [here](https://github.com/Perugolate/biocides2/blob/main/sh1000.tsv).
+
 |Treatment |Type       |Label   |Mutation                                                                                      |Locus tag    |Annotation |Function                                        |Run         |
 |:---------|:----------|:-------|:---------------------------------------------------------------------------------------------|:------------|:----------|:-----------------------------------------------|:-----------|
 |PG        |population |4       |frameshift variant c.117delG p.Gly41fs                                                        |PROKKA_01659 |hemY       |Protoporphyrinogen oxidase                      |SRR18771780 |
